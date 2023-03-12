@@ -14,13 +14,15 @@ class MatchesController {
     if (!query.inProgress) {
       const result = await this._matchesService.readAll();
       return res.status(200).json(result);
-    // } if (query.inProgress === 'true') {
-    //   const result = await this._matchesService.readInProgress(query.inProgress);
-    //   return res.status(200).json(result);
-    // } if (query.inProgress === 'false') {
     }
     const result = await this._matchesService.readInProgress(JSON.parse(progress));
     return res.status(200).json(result);
+  }
+
+  async updateFinish(req: Request, res: Response) {
+    const { id } = req.params;
+    await this._matchesService.updateFinish(Number(id));
+    return res.status(200).json({ message: 'Finished' });
   }
 }
 
