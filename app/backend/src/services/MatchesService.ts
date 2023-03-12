@@ -23,4 +23,23 @@ export default class MatchesService implements IServiceMatch {
     });
     return result;
   }
+
+  async readInProgress(progress: boolean): Promise<Match[]> {
+    const result = await this.model.findAll({
+      include: [
+        {
+          model: Team,
+          as: 'homeTeam',
+          attributes: ['teamName'],
+        },
+        {
+          model: Team,
+          as: 'awayTeam',
+          attributes: ['teamName'],
+        },
+      ],
+      where: { inProgress: progress },
+    });
+    return result;
+  }
 }

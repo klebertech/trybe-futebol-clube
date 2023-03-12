@@ -9,7 +9,17 @@ class MatchesController {
   }
 
   async readAll(req: Request, res: Response) {
-    const result = await this._matchesService.readAll();
+    const { query } = req;
+    const progress = query.inProgress as string;
+    if (!query.inProgress) {
+      const result = await this._matchesService.readAll();
+      return res.status(200).json(result);
+    // } if (query.inProgress === 'true') {
+    //   const result = await this._matchesService.readInProgress(query.inProgress);
+    //   return res.status(200).json(result);
+    // } if (query.inProgress === 'false') {
+    }
+    const result = await this._matchesService.readInProgress(JSON.parse(progress));
     return res.status(200).json(result);
   }
 }
