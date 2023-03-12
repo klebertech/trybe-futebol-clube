@@ -20,4 +20,10 @@ matchesRoutes
     (req: Request, res: Response) => matchesController.updateFinish(req, res),
   );
 
+matchesRoutes
+  .patch(
+    '/matches/:id',
+    authMiddleware,
+    (req: Request, res: Response) => matchesController.updateMatch(req, res),
+  );
 export default matchesRoutes;
