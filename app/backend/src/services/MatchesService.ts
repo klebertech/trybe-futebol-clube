@@ -3,6 +3,14 @@ import IServiceMatch from '../interfaces/IServiceMatch';
 import Match from '../database/models/MatchesModel';
 import Team from '../database/models/TeamsModel';
 
+interface IMatch{
+  id: number;
+  homeTeamId: number;
+  homeTeamGoals: number;
+  awayTeamId: number;
+  awayTeamGoals: number;
+  inProgress: boolean;
+}
 export default class MatchesService implements IServiceMatch {
   protected model: ModelStatic<Match> = Match;
 
@@ -64,5 +72,22 @@ export default class MatchesService implements IServiceMatch {
     }, {
       where: { id },
     });
+  }
+
+  async createMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<IMatch> {
+    const result = await this.model.create({
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+    });
+    const match = await this.model.findOne({ where: { id: result.id } });
+    if (!match) throw new Error('Error');
+    return match;
   }
 }

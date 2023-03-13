@@ -26,4 +26,11 @@ matchesRoutes
     authMiddleware,
     (req: Request, res: Response) => matchesController.updateMatch(req, res),
   );
+
+matchesRoutes
+  .post(
+    '/matches',
+    authMiddleware,
+    (req: Request, res: Response) => matchesController.createMatch(req, res),
+  );
 export default matchesRoutes;
