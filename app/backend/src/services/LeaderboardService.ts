@@ -11,12 +11,19 @@ export default class LeaderboardService implements IServiceLeaderboard {
 
   async readAll(): Promise<IResults[]> {
     const teams = await this.teamModel.findAll();
-    const matches = await this.matchModel.findAll({ where: { inProgress: false } });
+    const matches = await this.matchModel.findAll({
+      where: { inProgress: false },
+    });
     const teamMatches = teams.map((element) => {
       const name = element.teamName;
       const getStatus = getTeamStatus(element.id, matches);
       return { name, ...getStatus };
     });
+    teamMatches.sort((a, b) => b.totalPoints - a.totalPoints
+        || b.totalVictories - a.totalVictories
+        || b.goalsBalance - a.goalsBalance
+        || b.goalsFavor - a.goalsFavor
+        || a.goalsOwn - b.goalsOwn);
     return teamMatches;
   }
 }
