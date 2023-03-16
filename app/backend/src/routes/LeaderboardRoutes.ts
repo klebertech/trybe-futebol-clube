@@ -9,7 +9,13 @@ const leaderboardController = new LeaderboardController(leaderboardService);
 leaderboardRoutes
   .get(
     '/leaderboard/home',
-    (req: Request, res: Response) => leaderboardController.readAll(req, res),
+    (req: Request, res: Response) => leaderboardController.readHome(req, res),
+  );
+
+leaderboardRoutes
+  .get(
+    '/leaderboard/away',
+    (req: Request, res: Response) => leaderboardController.readAway(req, res),
   );
 
 export default leaderboardRoutes;

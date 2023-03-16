@@ -8,8 +8,13 @@ class LeaderboardController {
     this._leaderboardService = leaderboardService;
   }
 
-  async readAll(req: Request, res: Response) {
-    const result = await this._leaderboardService.readAll();
+  async readHome(req: Request, res: Response) {
+    const result = await this._leaderboardService.readHome();
+    return res.status(200).json(result);
+  }
+
+  async readAway(req: Request, res: Response) {
+    const result = await this._leaderboardService.readAway();
     return res.status(200).json(result);
   }
 }
