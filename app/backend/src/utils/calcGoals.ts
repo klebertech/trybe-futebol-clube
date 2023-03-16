@@ -115,7 +115,29 @@ const getTeamStatusAway = (id: number, matches: IMatches[]) => {
   return obj;
 };
 
+const getTeamStatusTotal = (id: number, matches: IMatches[]) => {
+  const getGoals = calcGoals(id, matches);
+  const getGames = countAwayGames(id, matches) + countHomeGames(id, matches);
+  const getPointsHome = homePoint(id, matches);
+  const getPointsAway = awayPoint(id, matches);
+  const goalsBalance = (getGoals.goalsFavorAway + getGoals.goalsFavorHome)
+  - (getGoals.goalsOwnAway + getGoals.goalsOwnHome);
+  const getEfficiency = ((getPointsHome.getPoint + getPointsAway.getPoint) / (getGames * 3)) * 100;
+  const obj = {
+    totalPoints: getPointsHome.getPoint + getPointsAway.getPoint,
+    totalGames: getGames,
+    totalVictories: getPointsHome.getWin + getPointsAway.getWin,
+    totalDraws: getPointsHome.getDraws + getPointsAway.getDraws,
+    totalLosses: getPointsHome.getLose + getPointsAway.getLose,
+    goalsFavor: getGoals.goalsFavorAway + getGoals.goalsFavorHome,
+    goalsOwn: getGoals.goalsOwnAway + getGoals.goalsOwnHome,
+    goalsBalance,
+    efficiency: Number(getEfficiency.toFixed(2)),
+  }; return obj;
+};
+
 export {
   getTeamStatusHome,
   getTeamStatusAway,
+  getTeamStatusTotal,
 };

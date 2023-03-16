@@ -18,4 +18,9 @@ leaderboardRoutes
     (req: Request, res: Response) => leaderboardController.readAway(req, res),
   );
 
+leaderboardRoutes
+  .get(
+    '/leaderboard',
+    (req: Request, res: Response) => leaderboardController.readTotal(req, res),
+  );
 export default leaderboardRoutes;

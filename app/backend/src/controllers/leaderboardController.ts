@@ -17,6 +17,11 @@ class LeaderboardController {
     const result = await this._leaderboardService.readAway();
     return res.status(200).json(result);
   }
+
+  async readTotal(req: Request, res: Response) {
+    const result = await this._leaderboardService.readTotal();
+    return res.status(200).json(result);
+  }
 }
 
 export default LeaderboardController;
